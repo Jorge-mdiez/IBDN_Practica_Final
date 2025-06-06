@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: proxy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: proxy
+  template:
+    metadata:
+      labels:
+        app: proxy
+    spec:
+      containers:
+      - name: proxy
+        image: node:18-alpine
+        command: ["node", "/client/proxy.js"]
+        ports:
+        - containerPort: 3000
+        volumeMounts:
+        - name: client-code
+          mountPath: /client
+      volumes:
+      - name: client-code
+        hostPath:
+          path: /mnt/volumen/IBDN_Practica_Final/client   # Cambia esto por la ruta absoluta en tu máquina donde está ./client
+          type: Directory
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: proxy-service
+spec:
+  selector:
+    app: proxy
+  type: NodePort
+  ports:
+  - name: http
+    protocol: TCP
+    port: 3000
+    targetPort: 3000
+    nodePort: 30000
+

@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spark-master
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: spark-master
+  template:
+    metadata:
+      labels:
+        app: spark-master
+    spec:
+      containers:
+      - name: spark-master
+        image: bitnami/spark:3.5.3
+        env:
+        - name: SPARK_MODE
+          value: "master"
+        - name: SPARK_RPC_AUTHENTICATION_ENABLED
+          value: "no"
+        ports:
+        - containerPort: 7077
+        - containerPort: 8080
+        volumeMounts:
+        - name: scala-target
+          mountPath: /home/ibdn/practica_creativa/flight_prediction/target/scala-2.12
+        - name: models
+          mountPath: /home/ibdn/practica_creativa/models
+      volumes:
+      - name: scala-target
+        hostPath:
+          path: /mnt/volumen/IBDN_Practica_Final/flight_prediction/target/scala-2.12   # Cambia por ruta absoluta local
+          type: Directory
+      - name: models
+        hostPath:
+          path: /mnt/volumen/IBDN_Practica_Final/models                             # Cambia por ruta absoluta local
+          type: Directory
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: spark-master-service
+spec:
+  selector:
+    app: spark-master
+  type: NodePort
+  ports:
+  - name: spark-master-port
+    protocol: TCP
+    port: 7077
+    targetPort: 7077
+    nodePort: 30010
+  - name: spark-master-ui
+    protocol: TCP
+    port: 8086
+    targetPort: 8080
+    nodePort: 30011
+
