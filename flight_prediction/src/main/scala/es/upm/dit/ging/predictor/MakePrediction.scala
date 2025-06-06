@@ -147,7 +147,7 @@ val dataStreamWriter = finalPredictions
   .option("spark.mongodb.connection.uri", "mongodb://mongo:27017")
   .option("spark.mongodb.database", "agile_data_science")
   .option("checkpointLocation", "/tmp/checkpoints-mongo")
-  .option("spark.mongodb.collection", "flight-delay-ml-response")
+  .option("spark.mongodb.collection", "flight_delay_ml_response")
   .outputMode("append")
   .start()
 
