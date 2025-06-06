@@ -141,15 +141,26 @@ object MakePrediction {
     finalPredictions.printSchema()
 
     // define streaming query para MongoDB
-val dataStreamWriter = finalPredictions
+//val dataStreamWriter = finalPredictions
+//.writeStream
+//  .format("mongodb")
+//  .option("spark.mongodb.connection.uri", "mongodb://mongo:27017")
+//  .option("spark.mongodb.database", "agile_data_science")
+//  .option("checkpointLocation", "/tmp/checkpoints-mongo")
+//  .option("spark.mongodb.collection", "flight_delay_ml_response")
+//  .outputMode("append")
+//  .start()
+
+val hdfsOutputPath = "hdfs://namenode1:8020/user/youruser/flight_delay_ml_response"
+
+val hdfsWriter = finalPredictions
   .writeStream
-  .format("mongodb")
-  .option("spark.mongodb.connection.uri", "mongodb://mongo:27017")
-  .option("spark.mongodb.database", "agile_data_science")
-  .option("checkpointLocation", "/tmp/checkpoints-mongo")
-  .option("spark.mongodb.collection", "flight_delay_ml_response")
+  .format("parquet")
+  .option("path", hdfsOutputPath)
+  .option("checkpointLocation", "/tmp/checkpoints-hdfs")
   .outputMode("append")
   .start()
+
 
 
 val kafkaOutput = finalPredictions.selectExpr("to_json(struct(*)) as value")
@@ -172,6 +183,7 @@ val consoleOutput = finalPredictions.writeStream
 // Esperar terminación de todos los streams
 kafkaWriter.awaitTermination()
 consoleOutput.awaitTermination()
+hdfsWriter.awaitTermination()
     
   }
 
