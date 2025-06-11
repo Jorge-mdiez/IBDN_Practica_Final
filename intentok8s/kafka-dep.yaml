@@ -34,3 +34,9 @@ spec:
           value: "CONTROLLER"
         - name: KAFKA_KRAFT_CLUSTER_ID
           value: "abcdefghij1234567890abcdefg"
+        volumeMounts:
+        - name: kafka-data
+          mountPath: /bitnami/kafka
+      volumes:
+      - name: kafka-data
+        emptyDir: {}
