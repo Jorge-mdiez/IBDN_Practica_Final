@@ -6,8 +6,10 @@ spec:
   selector:
     app: nifi
   ports:
-  - port: 8443
+  - name: webui
+    port: 8443
     targetPort: 8443
-  - port: 5050
+  - name: custom
+    port: 5050
     targetPort: 5050
   type: ClusterIP
