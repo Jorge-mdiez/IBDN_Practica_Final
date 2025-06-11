@@ -6,10 +6,13 @@ spec:
   selector:
     app: namenode1
   ports:
-  - port: 50070
+  - name: fs-web
+    port: 50070
     targetPort: 50070
-  - port: 9870
+  - name: namenode-ui
+    port: 9870
     targetPort: 9870
-  - port: 8020
+  - name: hdfs
+    port: 8020
     targetPort: 8020
   type: ClusterIP
