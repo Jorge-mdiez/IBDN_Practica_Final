@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: namenode1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: namenode1
+  template:
+    metadata:
+      labels:
+        app: namenode1
+    spec:
+      containers:
+      - name: namenode1
+        image: bde2020/hadoop-namenode:2.0.0-hadoop3.2.1-java8
+        ports:
+        - containerPort: 50070
+        - containerPort: 9870
+        - containerPort: 8020
+        env:
+        - name: CLUSTER_NAME
+          value: "example1"
+        - name: INIT_DAEMON_STEP
+          value: setup_hdfs
+        - name: HDFS_CONF_dfs_webhdfs_enabled
+          value: "true"
+        - name: HDFS_CONF_dfs_permissions_enabled
+          value: "false"
+        - name: CORE_CONF_hadoop_proxyuser_hue_hosts
+          value: "*"
+        - name: CORE_CONF_hadoop_proxyuser_hue_groups
+          value: "*"

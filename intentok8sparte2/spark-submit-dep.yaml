@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spark-submit
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: spark-submit
+  template:
+    metadata:
+      labels:
+        app: spark-submit
+    spec:
+      containers:
+      - name: spark-submit
+        image: bitnami/spark:3.5.3
+        command:
+          - /bin/bash
+          - -c
+          - >
+            spark-submit
+            --packages org.mongodb.spark:mongo-spark-connector_2.12:10.4.1,org.apache.spark:spark-sql-kafka-0-10_2.12:3.5.3
+            --class es.upm.dit.ging.predictor.MakePrediction
+            --master spark://spark-master:7077
+            /app/target/flight_prediction_2.12-0.1.jar
+        volumeMounts:
+        - name: flight-volume
+          mountPath: /app/target
+        - name: models-volume
+          mountPath: /home/ibdn/practica_creativa/models
+      volumes:
+      - name: flight-volume
+        emptyDir: {}
+      - name: models-volume
+        emptyDir: {}
