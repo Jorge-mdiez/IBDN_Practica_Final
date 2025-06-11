@@ -6,8 +6,10 @@ spec:
   selector:
     app: datanode1
   ports:
-  - port: 50075
+  - name: dn-web
+    port: 50075
     targetPort: 50075
-  - port: 9864
+  - name: dn-data
+    port: 9864
     targetPort: 9864
   type: ClusterIP
