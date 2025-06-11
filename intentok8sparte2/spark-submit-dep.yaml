@@ -13,24 +13,20 @@ spec:
         app: spark-submit
     spec:
       containers:
-      - name: spark-submit
-        image: bitnami/spark:3.5.3
-        command:
-          - /bin/bash
-          - -c
-          - >
-            spark-submit
-            --packages org.mongodb.spark:mongo-spark-connector_2.12:10.4.1,org.apache.spark:spark-sql-kafka-0-10_2.12:3.5.3
-            --class es.upm.dit.ging.predictor.MakePrediction
-            --master spark://spark-master:7077
-            /app/target/flight_prediction_2.12-0.1.jar
-        volumeMounts:
-        - name: flight-volume
-          mountPath: /app/target
-        - name: models-volume
-          mountPath: /home/ibdn/practica_creativa/models
-      volumes:
-      - name: flight-volume
-        emptyDir: {}
-      - name: models-volume
-        emptyDir: {}
+        - name: spark-submit
+          image: bitnami/spark:3.5.3
+          env:
+            - name: SPARK_MODE
+              value: client
+            - name: SPARK_MASTER_URL
+              value: spark://spark-master:7077
+            - name: HOME
+              value: /tmp  
+          command:
+            - /bin/bash
+            - "-c"
+            - |
+              /opt/bitnami/spark/bin/spark-submit \
+              --master $SPARK_MASTER_URL \
+              --class org.apache.spark.examples.SparkPi \
+              /opt/bitnami/spark/examples/jars/spark-examples_2.12.jar 100
