@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: flask-app
-        image: miusuario/flask-app:latest   # <-- pon tu nombre real
+        image: jorgemdiez/ibdn_flask_app:2   
         ports:
         - containerPort: 5001
         env:
