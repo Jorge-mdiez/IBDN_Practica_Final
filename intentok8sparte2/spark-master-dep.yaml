@@ -13,13 +13,13 @@ spec:
         app: spark-master
     spec:
       containers:
-      - name: spark-master
-        image: bitnami/spark:3.5.3
-        env:
-        - name: SPARK_MODE
-          value: master
-        - name: SPARK_RPC_AUTHENTICATION_ENABLED
-          value: "no"
-        ports:
-        - containerPort: 7077
-        - containerPort: 8080
+        - name: spark-master
+          image: bitnami/spark:3.5.3
+          ports:
+            - containerPort: 7077
+            - containerPort: 8080
+          env:
+            - name: SPARK_MODE
+              value: "master"
+            - name: SPARK_RPC_AUTHENTICATION_ENABLED
+              value: "no"
