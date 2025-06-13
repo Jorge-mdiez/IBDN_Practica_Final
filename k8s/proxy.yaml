@@ -14,18 +14,10 @@ spec:
     spec:
       containers:
       - name: proxy
-        image: node:18-alpine
-        command: ["node", "/client/proxy.js"]
+        image: jorgemdiez/proxy:latest   # Cambia por el nombre de tu imagen
         ports:
         - containerPort: 3000
-        volumeMounts:
-        - name: client-code
-          mountPath: /client
-      volumes:
-      - name: client-code
-        hostPath:
-          path: /mnt/IBDN_Practica_Final/client   # Cambia esto por la ruta absoluta en tu máquina donde está ./client
-          type: Directory
+
 ---
 apiVersion: v1
 kind: Service
@@ -41,4 +33,3 @@ spec:
     port: 3000
     targetPort: 3000
     nodePort: 30000
-

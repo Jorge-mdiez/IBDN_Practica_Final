@@ -1,9 +1,16 @@
-apiVersion: batch/v1
-kind: Job
+apiVersion: apps/v1
+kind: Deployment
 metadata:
-  name: spark-submit-job
+  name: spark-submit-deployment
 spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: spark-submit
   template:
+    metadata:
+      labels:
+        app: spark-submit
     spec:
       containers:
         - name: spark-submit
@@ -23,6 +30,6 @@ spec:
             - name: HOME
               value: "/root"
             - name: HADOOP_USER_NAME
-              value: "sparkuser"   # O el usuario que necesites
+              value: "sparkuser"
           imagePullPolicy: Always
-      restartPolicy: Never
+      restartPolicy: Always
