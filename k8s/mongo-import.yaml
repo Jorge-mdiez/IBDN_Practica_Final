@@ -20,9 +20,9 @@ spec:
       volumes:
       - name: init-scripts
         hostPath:
-          path: /mnt/volumen/IBDN_Practica_Final/resources
+          path: /mnt/IBDN_Practica_Final/resources
           type: Directory
       - name: import-data
         hostPath:
-          path: /mnt/volumen/IBDN_Practica_Final/data
+          path: /mnt/IBDN_Practica_Final/data
           type: Directory

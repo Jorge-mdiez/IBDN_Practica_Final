@@ -6,30 +6,23 @@ spec:
   template:
     spec:
       containers:
-      - name: spark-submit
-        image: bitnami/spark:3.5.3
-        command:
-          - spark-submit
-          - --packages
-          - org.mongodb.spark:mongo-spark-connector_2.12:10.4.1,org.apache.spark:spark-sql-kafka-0-10_2.12:3.5.3
-          - --class
-          - es.upm.dit.ging.predictor.MakePrediction
-          - --master
-          - spark://spark-master:7077
-          - /app/target/flight_prediction_2.12-0.1.jar
-        volumeMounts:
-        - name: scala-target
-          mountPath: /app/target
-        - name: models
-          mountPath: /home/ibdn/practica_creativa/models
+        - name: spark-submit
+          image: jorgemdiez/my-spark-job:latest
+          command: ["spark-submit"]
+          args:
+            - "--conf"
+            - "spark.jars.ivy=/tmp/.ivy"
+            - "--packages"
+            - "org.mongodb.spark:mongo-spark-connector_2.12:10.4.1,org.apache.spark:spark-sql-kafka-0-10_2.12:3.5.3"
+            - "--class"
+            - "es.upm.dit.ging.predictor.MakePrediction"
+            - "--master"
+            - "spark://spark-master-service:7077"
+            - "/app/target/flight_prediction_2.12-0.1.jar"
+          env:
+            - name: HOME
+              value: "/root"
+            - name: HADOOP_USER_NAME
+              value: "sparkuser"   # O el usuario que necesites
+          imagePullPolicy: Always
       restartPolicy: Never
-      volumes:
-      - name: scala-target
-        hostPath:
-          path: mnt/volumen/IBDN_Practica_Final/flight_prediction/target/scala-2.12   # Cambia a la ruta absoluta real
-          type: Directory
-      - name: models
-        hostPath:
-          path: /mnt/volumen/IBDN_Practica_Final/models                              # Cambia a la ruta absoluta real
-          type: Directory
-  backoffLimit: 4

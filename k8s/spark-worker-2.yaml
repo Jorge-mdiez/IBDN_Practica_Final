@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: spark-worker
-        image: bitnami/spark:3.5.3
+        image: jorgemdiez/my-spark-job:latest  # Cambiado a la imagen personalizada
         env:
         - name: SPARK_MODE
           value: "worker"
@@ -22,20 +22,7 @@ spec:
           value: "spark://spark-master:7077"
         ports:
         - containerPort: 8081
-        volumeMounts:
-        - name: scala-target
-          mountPath: /home/ibdn/practica_creativa/flight_prediction/target/scala-2.12
-        - name: models
-          mountPath: /home/ibdn/practica_creativa/models
-      volumes:
-      - name: scala-target
-        hostPath:
-          path: /mnt/volumen/IBDN_Practica_Final/flight_prediction/target/scala-2.12  # Cambia por ruta absoluta
-          type: Directory
-      - name: models
-        hostPath:
-          path: //mnt/volumen/IBDN_Practica_Final/models                              # Cambia por ruta absoluta
-          type: Directory
+        # Ya no necesita mounts porque todo está en la imagen
 ---
 apiVersion: v1
 kind: Service
@@ -51,4 +38,3 @@ spec:
     port: 8085
     targetPort: 8081
     nodePort: 30012
-

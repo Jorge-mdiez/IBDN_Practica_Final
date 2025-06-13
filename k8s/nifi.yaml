@@ -36,7 +36,7 @@ spec:
           claimName: nifi-config-pvc
       - name: nifi-output
         hostPath:
-          path: /ruta/absoluta/nifi_output   # Cambia a la ruta absoluta donde tienes la carpeta nifi_output
+          path: /mnt/IBDN_Practica_Final/nifi_output   # Cambia a la ruta absoluta donde tienes la carpeta nifi_output
           type: Directory
 ---
 apiVersion: v1

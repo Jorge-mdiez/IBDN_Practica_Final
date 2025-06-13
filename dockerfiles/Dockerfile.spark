@@ -1,0 +1,13 @@
+FROM bitnami/spark:3.5.3
+
+WORKDIR /app
+
+# Copiamos el JAR (ruta relativa al contexto de build)
+COPY flight_prediction/target/scala-2.12/flight_prediction_2.12-0.1.jar /app/target/flight_prediction_2.12-0.1.jar
+
+# Copiamos los modelos a la ruta interna
+COPY models /home/ibdn/practica_creativa/models
+
+USER root
+RUN adduser --uid 1001 --disabled-password --gecos "" sparkuser
+USER 1001

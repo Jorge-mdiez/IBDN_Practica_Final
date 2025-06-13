@@ -24,7 +24,7 @@ spec:
       volumes:
       - name: client-code
         hostPath:
-          path: /mnt/volumen/IBDN_Practica_Final/client   # Cambia esto por la ruta absoluta en tu máquina donde está ./client
+          path: /mnt/IBDN_Practica_Final/client   # Cambia esto por la ruta absoluta en tu máquina donde está ./client
           type: Directory
 ---
 apiVersion: v1
