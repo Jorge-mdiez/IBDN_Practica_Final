@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: spark-submit
 spec:
-  replicas: 1
+  replicas: 1 
   selector:
     matchLabels:
       app: spark-submit
@@ -15,18 +15,21 @@ spec:
       containers:
         - name: spark-submit
           image: jorgemdiez/my-spark-job:latest
-          command:
-            - /bin/bash
-            - -c
-            - |
-              /opt/bitnami/spark/bin/spark-submit \
-              --class es.upm.dit.ging.predictor.MakePrediction \
-              --master spark://spark-master:7077 \
-              --jars /opt/spark/jars/mongo-spark-connector_2.12-10.4.1.jar,/opt/spark/jars/spark-sql-kafka-0-10_2.12-3.5.3.jar \
-              /app/target/flight_prediction_2.12-0.1.jar
-          volumeMounts:
-            - mountPath: /app/target
-              name: app-volume
-      volumes:
-        - name: app-volume
-          emptyDir: {}
+          command: ["spark-submit"]
+          args:
+            - "--conf"
+            - "spark.jars.ivy=/tmp/.ivy"
+            - "--packages"
+            - "org.mongodb.spark:mongo-spark-connector_2.12:10.4.1,org.apache.spark:spark-sql-kafka-0-10_2.12:3.5.3"
+            - "--class"
+            - "es.upm.dit.ging.predictor.MakePrediction"
+            - "--master"
+            - "spark://spark-master-service:7077"
+            - "/app/target/flight_prediction_2.12-0.1.jar"
+          env:
+            - name: HOME
+              value: "/root"
+            - name: HADOOP_USER_NAME
+              value: "sparkuser"   
+          imagePullPolicy: Always
+      restartPolicy: Always  
