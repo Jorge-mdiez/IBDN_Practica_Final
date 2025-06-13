@@ -6,10 +6,11 @@ spec:
   selector:
     app: spark-master
   ports:
-    - name: spark
-      port: 7077
-      targetPort: 7077
-    - name: web
-      port: 8080
-      targetPort: 8080
+  - name: spark
+    port: 7077
+    targetPort: 7077
+  - name: webui
+    port: 8080
+    targetPort: 8080
+    nodePort: 30080
   type: NodePort
