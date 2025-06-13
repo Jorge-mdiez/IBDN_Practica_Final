@@ -23,3 +23,11 @@ spec:
               value: "master"
             - name: SPARK_RPC_AUTHENTICATION_ENABLED
               value: "no"
+          command:
+            - /bin/bash
+            - -c
+            - |
+              /opt/bitnami/spark/bin/spark-class org.apache.spark.deploy.master.Master \
+              --host $(hostname) \
+              --port 7077 \
+              --webui-port 8080
