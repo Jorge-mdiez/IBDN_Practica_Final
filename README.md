@@ -37,11 +37,11 @@ cd data
 ./resources/import_distances.sh
 ```
 
-Ahora el servicio de predicción debería estar accesible en localhost:5001/flights/delays/predict_kafka
+Ahora el servicio de predicción debería estar accesible en (http://localhost:5001/flights/delays/predict_kafka)
 
-Para configurar el flujo de nifi, acceder a localhost:8443/nifi
+Para configurar el flujo de nifi, acceder a (http://localhost:8443/nifi)
 
-Una vez realizadas las predicciones, se puede comprobar que se escriben en HDFS entrando a localhost:9870
+Una vez realizadas las predicciones, se puede comprobar que se escriben en HDFS entrando a (http://localhost:9870)
 
 ## Despliegue con kubernetes
 
