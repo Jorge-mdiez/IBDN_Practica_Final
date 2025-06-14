@@ -56,15 +56,23 @@ Comrpobamos que todos los pods se han levantado correctamente:
 ```bash
 kubectl get pods
 ```
+Para cargar en mongo la bbdd (igual que en docker):
+```bash
+kubectl cp . <nombre_pod_mongo>:/data
+kubectl exec -ti <nombre_pod_mongo> -- bash
+cd data
+./resources/import_distances.sh
+```
+
 Podemos acceder al frontend obteniendo la ip de minikube con
 ```bash
 minikube ip
 ```
-y accediendo al puerto 30001/flights/delays/predict_kafka
+y accediendo al puerto (30001/flights/delays/predict_kafka)
 El servicio estará disponible y podrás enviar los datos del vuelo para predecir, pero se quedará en "processing...". Esto se debe a que:
 -La petición se escribe en el topic de kafka
 -Pero spark no funciona correctamente, por lo que no realiza la predicción
 
 ## Nota
-Tanto las imágenes personalizadas para docker (flask-app) como k8s(flask-app, proxy y spark) están subidas a dockerhub, pero están hechas a partir de los Dockerfiles que se encuentran en el repositorio (o bien en /dockerfiles o en /resources/web).
+Tanto las imágenes personalizadas para docker (flask-app) como k8s(flask-app, proxy y spark) están subidas a dockerhub por simplicidad, pero están hechas a partir de los Dockerfiles que se encuentran en el repositorio (o bien en /dockerfiles o en /resources/web).
 
