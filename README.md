@@ -52,9 +52,9 @@ minikube start
 ```
 (Si estamos en los ordenadores del laboratorio, habra que habilitar primero la virtualizacion con k8s)
 
-En la carpeta que contiene los archivos YAML de kubernetes, ejecutamos:
+Desplegamos todos los pods con este comando:
 ```
-kubectl -f apply .
+kubectl apply -f k8s/
 ```
 
 Comprobamos que todos los pods se han levantado correctamente:
