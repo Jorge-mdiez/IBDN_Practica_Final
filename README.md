@@ -69,8 +69,11 @@ Podemos acceder al frontend obteniendo la ip de minikube con
 minikube ip
 ```
 y accediendo al puerto (30001/flights/delays/predict_kafka)
+
 El servicio estará disponible y podrás enviar los datos del vuelo para predecir, pero se quedará en "processing...". Esto se debe a que:
+
 -La petición se escribe en el topic de kafka
+
 -Pero spark no funciona correctamente, por lo que no realiza la predicción
 
 ## Nota
