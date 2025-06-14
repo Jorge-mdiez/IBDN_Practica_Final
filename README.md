@@ -12,6 +12,7 @@ El sistema permite realizar predicciones de retrasos en vuelos. Las mejoras real
 4. Almacenamiento de predicciones en HDFS en lugar de MongoDB.
 5. Despliegue de toda la infraestructura en Kubernetes (aunque Spark no se encuentra funcional, lo que impide la generación de predicciones).
 
+Adicionalmente, se ha creado un read_parquet.py para ver en un df los .parquet de HDFS
 
 ## Puesta en marcha
 
