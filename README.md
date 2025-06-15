@@ -75,11 +75,7 @@ minikube ip
 ```
 y accediendo al puerto (30001/flights/delays/predict_kafka)
 
-El servicio estará disponible y podrás enviar los datos del vuelo para predecir, pero se quedará en "processing...". Esto se debe a que:
-
--La petición se escribe en el topic de kafka
-
--Pero spark no funciona correctamente, por lo que no realiza la predicción
+El servicio se despliega y podemos acceder a la interfaz, pero al lanzar la predicción se queda en "processing...". Según hemos visto, la petición si llega a escribirse en el topic de kafka, pero spark no funciona correctamente, por lo que no realiza la predicción.
 
 ## Nota
 Tanto las imágenes personalizadas para docker (flask-app) como k8s(flask-app, proxy y spark) están subidas a dockerhub por simplicidad, pero están hechas a partir de los Dockerfiles que se encuentran en el repositorio (o bien en /dockerfiles o en /resources/web).
